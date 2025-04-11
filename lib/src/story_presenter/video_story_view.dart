@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+
 import '../models/story_item.dart';
 import '../story_presenter/story_view.dart';
 import '../utils/story_utils.dart';
@@ -20,8 +22,7 @@ class VideoStoryView extends StatefulWidget {
   final bool? looping;
 
   /// Creates a [VideoStoryView] widget.
-  const VideoStoryView(
-      {required this.storyItem, this.onVideoLoad, this.looping, super.key});
+  const VideoStoryView({required this.storyItem, this.onVideoLoad, this.looping, super.key});
 
   @override
   State<VideoStoryView> createState() => _VideoStoryViewState();
@@ -30,10 +31,12 @@ class VideoStoryView extends StatefulWidget {
 class _VideoStoryViewState extends State<VideoStoryView> {
   VideoPlayerController? videoPlayerController;
   bool hasError = false;
+  late final Completer<void> _initialiseVideoPlayerCompleter;
 
   @override
   void initState() {
-    _initialiseVideoPlayer();
+    _initialiseVideoPlayerCompleter = Completer<void>();
+    _initialiseVideoPlayerCompleter.complete(_initialiseVideoPlayer());
     super.initState();
   }
 
@@ -43,8 +46,7 @@ class _VideoStoryViewState extends State<VideoStoryView> {
       final storyItem = widget.storyItem;
       if (storyItem.storyItemSource.isNetwork) {
         // Initialize video controller for network source.
-        videoPlayerController =
-            await VideoUtils.instance.videoControllerFromUrl(
+        videoPlayerController = await VideoUtils.instance.videoControllerFromUrl(
           url: storyItem.url!,
           cacheFile: storyItem.videoConfig?.cacheVideo,
           videoPlayerOptions: storyItem.videoConfig?.videoPlayerOptions,
@@ -78,7 +80,9 @@ class _VideoStoryViewState extends State<VideoStoryView> {
 
   @override
   void dispose() {
-    videoPlayerController?.dispose();
+    if (_initialiseVideoPlayerCompleter.isCompleted) {
+      videoPlayerController?.dispose();
+    }
     super.dispose();
   }
 
@@ -113,10 +117,8 @@ class _VideoStoryViewState extends State<VideoStoryView> {
               fit: widget.storyItem.videoConfig?.fit ?? BoxFit.cover,
               alignment: Alignment.center,
               child: SizedBox(
-                width: widget.storyItem.videoConfig?.width ??
-                    videoPlayerController!.value.size.width,
-                height: widget.storyItem.videoConfig?.height ??
-                    videoPlayerController!.value.size.height,
+                width: widget.storyItem.videoConfig?.width ?? videoPlayerController!.value.size.width,
+                height: widget.storyItem.videoConfig?.height ?? videoPlayerController!.value.size.height,
                 child: VideoPlayer(videoPlayerController!),
               ),
             )

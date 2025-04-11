@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:video_player/video_player.dart';
@@ -38,6 +39,7 @@ class VideoUtils {
     // If no cached file is found, create a VideoPlayerController from the network URL.
     return VideoPlayerController.networkUrl(
       Uri.parse(url),
+      httpHeaders: {'Content-Disposition': 'attachment'},
       videoPlayerOptions: videoPlayerOptions,
     );
   }

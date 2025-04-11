@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_story_presenter/flutter_story_presenter.dart';
@@ -45,43 +46,61 @@ class _HomeState extends State<Home> {
       stories: [
         StoryItem(
           storyItemType: StoryItemType.image,
-          imageConfig: StoryViewImageConfig(
+          imageConfig: const StoryViewImageConfig(
             fit: BoxFit.cover,
           ),
-          description: 'Yoshlarning ilmiy va innovatsion faoliyatini qoʻllab-quvvatlash, gaz taʼminoti sohasida samaradorlikka erishish hamda startap loyihalarni rivojlantirish maqsadida tashkil etilgan “Eng yaxshi ilmiy ishlanma” startap loyihalar tanlovining yakuniy bosqichi oʻz yakuniga yetdi. Natijalar 10 kun muddatda “Hududgaztaʼminot” AJning rasmiy veb-sayti va kanallarida eʼlon qilinadi.',
-          url: "https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=800",
+          description:
+              'Yoshlarning ilmiy va innovatsion faoliyatini qoʻllab-quvvatlash, gaz taʼminoti sohasida samaradorlikka erishish hamda startap loyihalarni rivojlantirish maqsadida tashkil etilgan “Eng yaxshi ilmiy ishlanma” startap loyihalar tanlovining yakuniy bosqichi oʻz yakuniga yetdi. Natijalar 10 kun muddatda “Hududgaztaʼminot” AJning rasmiy veb-sayti va kanallarida eʼlon qilinadi.',
+          url: "https://hgt-dev-cdn.uicgroup.tech/hgt/simple_story.png",
         ),
-        // StoryItem(
-        //   storyItemType: StoryItemType.video,
-        //   storyItemSource: StoryItemSource.asset,
-        //   url: 'assets/fb8512a35d6f4b2e8917b74a048de71a.MP4',
-        //   thumbnail: const Center(
-        //       child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: [
-        //       CupertinoActivityIndicator(
-        //         radius: 15,
-        //       ),
-        //       SizedBox(
-        //         width: 10,
-        //       ),
-        //       Text('Video Loading')
-        //     ],
-        //   )),
-        //   videoConfig: const StoryViewVideoConfig(
-        //     fit: BoxFit.cover,
-        //   ),
-        // ),
-        // StoryItem(
-        //   storyItemType: StoryItemType.video,
-        //   url: 'https://videos.pexels.com/video-files/5913245/5913245-uhd_1440_2560_30fps.mp4',
-        //   videoConfig: const StoryViewVideoConfig(
-        //     fit: BoxFit.cover,
-        //     height: double.infinity,
-        //     width: double.infinity,
-        //     loadingWidget: Center(child: CupertinoActivityIndicator()),
-        //   ),
-        // ),
+        StoryItem(
+          storyItemType: StoryItemType.image,
+          imageConfig: const StoryViewImageConfig(
+            fit: BoxFit.cover,
+          ),
+          description:
+              'Yoshlarning ilmiy va innovatsion faoliyatini qoʻllab-quvvatlash, gaz taʼminoti sohasida samaradorlikka erishish hamda startap loyihalarni rivojlantirish maqsadida tashkil etilgan “Eng yaxshi ilmiy ishlanma” startap loyihalar tanlovining yakuniy bosqichi oʻz yakuniga yetdi. Natijalar 10 kun muddatda “Hududgaztaʼminot” AJning rasmiy veb-sayti va kanallarida eʼlon qilinadi.',
+          url: "https://hgt-dev-cdn.uicgroup.tech/hgt/image.png",
+        ),
+        StoryItem(
+          storyItemType: StoryItemType.video,
+          storyItemSource: StoryItemSource.network,
+          url:
+              'https://hgt-dev-cdn.uicgroup.tech/hgt/Prezidentimiz_Yunusobod_tumanida_yangi_ochilgan__High_Town_Mall__savdo-kongilochar_majmuasida.mp4',
+          thumbnail: const Center(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CupertinoActivityIndicator(
+                radius: 15,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text('Video Loading')
+            ],
+          )),
+          videoConfig: const StoryViewVideoConfig(
+            cacheVideo: true,
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+            loadingWidget: Center(child: CupertinoActivityIndicator()),
+          ),
+        ),
+        StoryItem(
+          storyItemSource: StoryItemSource.network,
+          storyItemType: StoryItemType.video,
+          url:
+              'https://videos.pexels.com/video-files/5913245/5913245-uhd_1440_2560_30fps.mp4',
+          videoConfig: const StoryViewVideoConfig(
+            cacheVideo: true,
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+            loadingWidget: Center(child: CupertinoActivityIndicator()),
+          ),
+        ),
       ],
     ),
     // StoryModel(
@@ -264,6 +283,7 @@ class _MyStoryViewState extends State<MyStoryView> {
     );
 
     return FlutterStoryPresenter(
+      restartOnCompleted: false,
       flutterStoryController: controller,
       items: widget.storyModel.stories,
       footerWidget: MessageBoxView(controller: controller),
