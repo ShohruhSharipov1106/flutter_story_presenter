@@ -3,16 +3,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_story_presenter/src/story_presenter/story_custom_view_wrapper.dart';
-import '../story_presenter/story_view_indicator.dart';
+import 'package:video_player/video_player.dart';
+
+import '../controller/flutter_story_controller.dart';
 import '../models/story_item.dart';
 import '../models/story_view_indicator_config.dart';
-import '../controller/flutter_story_controller.dart';
 import '../story_presenter/image_story_view.dart';
+import '../story_presenter/story_view_indicator.dart';
+import '../story_presenter/text_story_view.dart';
 import '../story_presenter/video_story_view.dart';
 import '../story_presenter/web_story_view.dart';
-import '../story_presenter/text_story_view.dart';
 import '../utils/story_utils.dart';
-import 'package:video_player/video_player.dart';
 
 //! //! ***** NOTE ***** //! //!
 /// currently visibility detector is used to do major operations like
@@ -43,6 +44,7 @@ typedef OnResume = Future<bool> Function();
 typedef IndicatorWrapper = Widget Function(Widget child);
 typedef CommonBuilder = Widget Function(BuildContext context, int index);
 typedef StoryBuilder = StoryItem Function(BuildContext context, int index);
+typedef DescriptionBuilder = Widget Function(BuildContext context, String? description, StoryController? controller);
 
 final durationNotifier = ValueNotifier(const Duration(seconds: 5));
 
@@ -67,6 +69,8 @@ class StoryPresenter extends StatefulWidget {
     this.indicatorWrapper,
     this.onLongPress,
     this.onLongPressRelease,
+    this.descriptionBuilder,
+    this.topGradient,
     super.key,
   });
 
@@ -138,12 +142,15 @@ class StoryPresenter extends StatefulWidget {
 
   final VoidCallback? onLongPressRelease;
 
+  final DescriptionBuilder? descriptionBuilder;
+
+  final Gradient? topGradient;
+
   @override
   State<StoryPresenter> createState() => _StoryPresenterState();
 }
 
-class _StoryPresenterState extends State<StoryPresenter>
-    with WidgetsBindingObserver, SingleTickerProviderStateMixin {
+class _StoryPresenterState extends State<StoryPresenter> with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   VideoPlayerController? _currentVideoPlayer;
 
@@ -337,6 +344,17 @@ class _StoryPresenterState extends State<StoryPresenter>
           fit: StackFit.expand,
           children: [
             _buildContent(context, index, item),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: widget.topGradient,
+                ),
+                height: 82,
+              ),
+            ),
             _buildProgressBar(context, index, item),
             ..._buildGestures(context, index, item),
             if (widget.headerBuilder != null) ...{
@@ -355,6 +373,9 @@ class _StoryPresenterState extends State<StoryPresenter>
                 child: widget.footerBuilder!(context, index),
               ),
             },
+            if (item.description != null && item.description!.isNotEmpty && widget.descriptionBuilder != null) ...{
+              widget.descriptionBuilder!(context, item.description, widget.storyController),
+            }
           ],
         );
       },
@@ -429,8 +450,7 @@ class _StoryPresenterState extends State<StoryPresenter>
           isAutoStart: true,
           key: UniqueKey(),
           builder: () {
-            return item.customWidget!(widget.storyController) ??
-                const SizedBox.shrink();
+            return item.customWidget!(widget.storyController) ?? const SizedBox.shrink();
           },
           storyItem: item,
           onVisibilityChanged: (isVisible) {
@@ -464,7 +484,6 @@ class _StoryPresenterState extends State<StoryPresenter>
             ),
           );
         });
-
     return widget.indicatorWrapper?.call(child) ?? child;
   }
 

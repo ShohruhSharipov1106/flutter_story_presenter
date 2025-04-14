@@ -14,6 +14,7 @@ class StoryItem {
     this.textConfig,
     this.webConfig,
     this.customWidget,
+    this.description,
   })  : assert(
           storyItemType == StoryItemType.custom || url != null,
           'URL is required when storyItemType is not custom',
@@ -54,4 +55,6 @@ class StoryItem {
 
   /// Applicable when [storyItemType] is [StoryItemType.web]
   final StoryViewWebConfig? webConfig;
+
+  final String? description;
 }

@@ -357,6 +357,7 @@ class _MyStoryViewState extends State<MyStoryView> {
     );
 
     return StoryPresenter(
+
       storyController: controller,
       itemCount: widget.storyModel.stories.length,
       itemBuilder: (context, index) {
