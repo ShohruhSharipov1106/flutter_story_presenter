@@ -366,7 +366,7 @@ class _StoryPresenterState extends State<StoryPresenter> with WidgetsBindingObse
                     ),
                   ),
                   Positioned(
-                    top: 0,
+                    top: widget.useSafeArea ? MediaQuery.of(context).padding.top : 0,
                     left: 0,
                     right: 0,
                     child: Container(
