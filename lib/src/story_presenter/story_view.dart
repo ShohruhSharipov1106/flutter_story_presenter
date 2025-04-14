@@ -352,7 +352,7 @@ class _StoryPresenterState extends State<StoryPresenter> with WidgetsBindingObse
                 fit: StackFit.expand,
                 children: [
                   Padding(
-                    padding: widget.useSafeArea ? MediaQuery.paddingOf(context) : EdgeInsets.zero,
+                    padding: widget.useSafeArea ? MediaQuery.paddingOf(context).copyWith(bottom: 0) : EdgeInsets.zero,
                     child: Builder(
                       builder: (context) {
                         if (widget.borderRadius != null) {
