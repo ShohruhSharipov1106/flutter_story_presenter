@@ -345,61 +345,70 @@ class _StoryPresenterState extends State<StoryPresenter> with WidgetsBindingObse
       itemCount: widget.itemCount,
       itemBuilder: (context, index) {
         final item = widget.itemBuilder(context, index);
-
-        return Stack(
-          fit: StackFit.expand,
+        return Column(
           children: [
-            Padding(
-              padding: widget.useSafeArea ? MediaQuery.paddingOf(context) : EdgeInsets.zero,
-              child: Builder(
-                builder: (context) {
-                  if (widget.borderRadius != null) {
-                    return ClipRRect(
-                      borderRadius: widget.borderRadius!,
-                      child: _buildContent(context, index, item),
-                    );
+            Expanded(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Padding(
+                    padding: widget.useSafeArea ? MediaQuery.paddingOf(context) : EdgeInsets.zero,
+                    child: Builder(
+                      builder: (context) {
+                        if (widget.borderRadius != null) {
+                          return ClipRRect(
+                            borderRadius: widget.borderRadius!,
+                            child: _buildContent(context, index, item),
+                          );
+                        }
+                        return _buildContent(context, index, item);
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: widget.topGradient,
+                      ),
+                      height: 82,
+                    ),
+                  ),
+                  Padding(
+                    padding: MediaQuery.paddingOf(context),
+                    child: _buildProgressBar(context, index, item),
+                  ),
+                  ..._buildGestures(context, index, item),
+                  if (widget.headerBuilder != null) ...{
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: SafeArea(
+                        bottom: storyViewIndicatorConfig.enableBottomSafeArea,
+                        top: storyViewIndicatorConfig.enableTopSafeArea,
+                        child: widget.headerBuilder!(context, index),
+                      ),
+                    ),
+                  },
+
+                  if (item.description != null && item.description!.isNotEmpty && widget.descriptionBuilder != null) ...{
+                    Positioned(
+                      bottom: 12,
+                      left: 12,
+                      right: 12,
+                      child: widget.descriptionBuilder!(context, item.description, widget.storyController),
+                    ),
                   }
-                  return _buildContent(context, index, item);
-                },
+                ],
               ),
             ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: widget.topGradient,
-                ),
-                height: 82,
-              ),
-            ),
-            _buildProgressBar(context, index, item),
-            ..._buildGestures(context, index, item),
-            if (widget.headerBuilder != null) ...{
-              Align(
-                alignment: Alignment.topCenter,
-                child: SafeArea(
-                  bottom: storyViewIndicatorConfig.enableBottomSafeArea,
-                  top: storyViewIndicatorConfig.enableTopSafeArea,
-                  child: widget.headerBuilder!(context, index),
-                ),
-              ),
-            },
             if (widget.footerBuilder != null) ...{
               Align(
                 alignment: Alignment.bottomCenter,
                 child: widget.footerBuilder!(context, index),
               ),
             },
-            if (item.description != null && item.description!.isNotEmpty && widget.descriptionBuilder != null) ...{
-              Positioned(
-                bottom: 12,
-                left: 12,
-                right: 12,
-                child: widget.descriptionBuilder!(context, item.description, widget.storyController),
-              ),
-            }
           ],
         );
       },

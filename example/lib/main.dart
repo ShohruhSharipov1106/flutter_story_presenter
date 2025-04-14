@@ -357,6 +357,7 @@ class _MyStoryViewState extends State<MyStoryView> {
     );
 
     return StoryPresenter(
+      borderRadius: BorderRadius.circular(12),
 
       storyController: controller,
       itemCount: widget.storyModel.stories.length,
