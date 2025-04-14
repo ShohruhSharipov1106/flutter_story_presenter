@@ -71,6 +71,8 @@ class StoryPresenter extends StatefulWidget {
     this.onLongPressRelease,
     this.descriptionBuilder,
     this.topGradient,
+    this.useSafeArea = true,
+    this.borderRadius,
     super.key,
   });
 
@@ -145,6 +147,10 @@ class StoryPresenter extends StatefulWidget {
   final DescriptionBuilder? descriptionBuilder;
 
   final Gradient? topGradient;
+
+  final bool useSafeArea;
+
+  final BorderRadius? borderRadius;
 
   @override
   State<StoryPresenter> createState() => _StoryPresenterState();
@@ -343,7 +349,20 @@ class _StoryPresenterState extends State<StoryPresenter> with WidgetsBindingObse
         return Stack(
           fit: StackFit.expand,
           children: [
-            _buildContent(context, index, item),
+            Padding(
+              padding: widget.useSafeArea ? MediaQuery.paddingOf(context) : EdgeInsets.zero,
+              child: Builder(
+                builder: (context) {
+                  if (widget.borderRadius != null) {
+                    return ClipRRect(
+                      borderRadius: widget.borderRadius!,
+                      child: _buildContent(context, index, item),
+                    );
+                  }
+                  return _buildContent(context, index, item);
+                },
+              ),
+            ),
             Positioned(
               top: 0,
               left: 0,
@@ -374,7 +393,12 @@ class _StoryPresenterState extends State<StoryPresenter> with WidgetsBindingObse
               ),
             },
             if (item.description != null && item.description!.isNotEmpty && widget.descriptionBuilder != null) ...{
-              widget.descriptionBuilder!(context, item.description, widget.storyController),
+              Positioned(
+                bottom: 12,
+                left: 12,
+                right: 12,
+                child: widget.descriptionBuilder!(context, item.description, widget.storyController),
+              ),
             }
           ],
         );
