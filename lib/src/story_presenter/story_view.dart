@@ -540,7 +540,7 @@ class _StoryPresenterState extends State<StoryPresenter> with WidgetsBindingObse
       Align(
         alignment: Alignment.centerRight,
         child: SizedBox(
-          width: mdSize.width * .8,
+          width: mdSize.width * .2,
           height: mdSize.height,
           child: GestureDetector(
             onTap: () async {
