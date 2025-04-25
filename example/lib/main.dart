@@ -46,109 +46,109 @@ class _HomeState extends State<Home> {
       userName: 'Kaival Patel',
       userProfile: 'https://avatars.githubusercontent.com/u/39383435?v=4',
       stories: [
+        // StoryItem(
+        //   storyItemType: StoryItemType.video,
+        //   storyItemSource: StoryItemSource.network,
+        //   url:
+        //       'https://videocdn.cdnpk.net/joy/content/video/free/2014-12/large_preview/Raindrops_Videvo.mp4?token=exp=1744129744~acl=/*~hmac=aceef1c035c412a40324f70c5a65183f8fe0ef1823e1f9d3c3fadeb6f690fa00',
+        //   videoConfig: const StoryViewVideoConfig(
+        //     fit: BoxFit.contain,
+        //     loadingWidget: Center(
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           CupertinoActivityIndicator(
+        //             radius: 15,
+        //           ),
+        //           SizedBox(
+        //             width: 10,
+        //           ),
+        //           Text('Video Loading')
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // StoryItem(
+        //   storyItemType: StoryItemType.video,
+        //   storyItemSource: StoryItemSource.asset,
+        //   url: 'assets/fb8512a35d6f4b2e8917b74a048de71a.MP4',
+        //   videoConfig: const StoryViewVideoConfig(
+        //     fit: BoxFit.cover,
+        //     loadingWidget: Center(
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           CupertinoActivityIndicator(
+        //             radius: 15,
+        //           ),
+        //           SizedBox(
+        //             width: 10,
+        //           ),
+        //           Text('Video Loading')
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // StoryItem(
+        //   storyItemType: StoryItemType.video,
+        //   storyItemSource: StoryItemSource.asset,
+        //   url: 'assets/fb8512a35d6f4b2e8917b74a048de71a.MP4',
+        //   videoConfig: const StoryViewVideoConfig(
+        //     fit: BoxFit.cover,
+        //     loadingWidget: Center(
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           CupertinoActivityIndicator(
+        //             radius: 15,
+        //           ),
+        //           SizedBox(
+        //             width: 10,
+        //           ),
+        //           Text('Video Loading')
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // StoryItem(
+        //   storyItemType: StoryItemType.video,
+        //   storyItemSource: StoryItemSource.asset,
+        //   url: 'assets/fb8512a35d6f4b2e8917b74a048de71a.MP4',
+        //   videoConfig: const StoryViewVideoConfig(
+        //     fit: BoxFit.cover,
+        //     loadingWidget: Center(
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           CupertinoActivityIndicator(
+        //             radius: 15,
+        //           ),
+        //           SizedBox(
+        //             width: 10,
+        //           ),
+        //           Text('Video Loading')
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
         StoryItem(
-          storyItemType: StoryItemType.video,
-          storyItemSource: StoryItemSource.network,
+          storyItemType: StoryItemType.image,
           url:
-              'https://videocdn.cdnpk.net/joy/content/video/free/2014-12/large_preview/Raindrops_Videvo.mp4?token=exp=1744129744~acl=/*~hmac=aceef1c035c412a40324f70c5a65183f8fe0ef1823e1f9d3c3fadeb6f690fa00',
-          videoConfig: const StoryViewVideoConfig(
-            fit: BoxFit.contain,
-            loadingWidget: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoActivityIndicator(
-                    radius: 15,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Video Loading')
-                ],
-              ),
-            ),
-          ),
-        ),
-        StoryItem(
-          storyItemType: StoryItemType.video,
-          storyItemSource: StoryItemSource.asset,
-          url: 'assets/fb8512a35d6f4b2e8917b74a048de71a.MP4',
-          videoConfig: const StoryViewVideoConfig(
-            fit: BoxFit.cover,
-            loadingWidget: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoActivityIndicator(
-                    radius: 15,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Video Loading')
-                ],
-              ),
-            ),
-          ),
-        ),
-        StoryItem(
-          storyItemType: StoryItemType.video,
-          storyItemSource: StoryItemSource.asset,
-          url: 'assets/fb8512a35d6f4b2e8917b74a048de71a.MP4',
-          videoConfig: const StoryViewVideoConfig(
-            fit: BoxFit.cover,
-            loadingWidget: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoActivityIndicator(
-                    radius: 15,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Video Loading')
-                ],
-              ),
-            ),
-          ),
-        ),
-        StoryItem(
-          storyItemType: StoryItemType.video,
-          storyItemSource: StoryItemSource.asset,
-          url: 'assets/fb8512a35d6f4b2e8917b74a048de71a.MP4',
-          videoConfig: const StoryViewVideoConfig(
-            fit: BoxFit.cover,
-            loadingWidget: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoActivityIndicator(
-                    radius: 15,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Video Loading')
-                ],
-              ),
-            ),
-          ),
+              "https://cdn.hgt.uz/hgt/Don_image_1_source_wLMsLl7.png",
         ),
         StoryItem(
           storyItemType: StoryItemType.image,
           url:
-              "https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=800",
+              "https://cdn.hgt.uz/hgt/ed599e3ef4fbd1820c041b967f848a78.jpg",
         ),
         StoryItem(
           storyItemType: StoryItemType.image,
           url:
-              "https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=800",
-        ),
-        StoryItem(
-          storyItemType: StoryItemType.image,
-          url:
-              "https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=800",
+              "https://cdn.hgt.uz/hgt/d81e2570d41473e5e6a2dbfdd20ab9ef_DBfOj4E.jpg",
         ),
         StoryItem(
             storyItemType: StoryItemType.video,

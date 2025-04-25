@@ -313,10 +313,9 @@ class _StoryPresenterState extends State<StoryPresenter> with WidgetsBindingObse
 
   /// Starts the countdown for the story item duration.
   void _startStoryCountdown(Duration duration) {
-    _resetAnimation();
-
     durationNotifier.value = duration;
     _animationController.duration = duration;
+    _resetAnimation();
     _animationController.addStatusListener(animationStatusListener);
     _forwardAnimation();
   }

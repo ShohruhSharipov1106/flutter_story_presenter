@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_story_presenter/flutter_story_presenter.dart';
@@ -27,12 +28,20 @@ class ImageStoryView extends StatefulWidget {
 class _ImageStoryViewState extends State<ImageStoryView> {
   /// A flag to ensure the [widget.onImageLoaded] callback is called only once.
   bool _isImageLoaded = false;
+  bool _isVisible = false;
 
   /// Marks the image as loaded and calls the [widget.onImageLoaded] callback if it hasn't been called already.
   void markImageAsLoaded() {
     if (!_isImageLoaded) {
       _isImageLoaded = true;
-      widget.onVisibilityChanged?.call(false, true);
+      widget.onVisibilityChanged?.call(_isVisible, true);
+    }
+  }
+
+  void markImageAsVisible() {
+    if (!_isVisible) {
+      _isVisible = true;
+      widget.onVisibilityChanged?.call(true, _isImageLoaded);
     }
   }
 
@@ -65,8 +74,8 @@ class _ImageStoryViewState extends State<ImageStoryView> {
           final w = imageConfig?.progressIndicatorBuilder?.call(
               context,
               '',
-              DownloadProgress('', loadingProgress?.expectedTotalBytes ?? 0,
-                  loadingProgress?.cumulativeBytesLoaded ?? 0));
+              DownloadProgress(
+                  '', loadingProgress?.expectedTotalBytes ?? 0, loadingProgress?.cumulativeBytesLoaded ?? 0));
           return w ?? const SizedBox.shrink();
         },
       );
@@ -95,8 +104,8 @@ class _ImageStoryViewState extends State<ImageStoryView> {
           final w = imageConfig?.progressIndicatorBuilder?.call(
               context,
               '',
-              DownloadProgress('', loadingProgress?.expectedTotalBytes ?? 0,
-                  loadingProgress?.cumulativeBytesLoaded ?? 0));
+              DownloadProgress(
+                  '', loadingProgress?.expectedTotalBytes ?? 0, loadingProgress?.cumulativeBytesLoaded ?? 0));
           return w ?? const SizedBox.shrink();
         },
       );
@@ -106,6 +115,7 @@ class _ImageStoryViewState extends State<ImageStoryView> {
     child = CachedNetworkImage(
       imageUrl: widget.storyItem.url!,
       imageBuilder: (context, imageProvider) {
+        print('imageProvider: $imageProvider');
         // Mark the image as loaded once it is built.
         markImageAsLoaded();
         return Image(
@@ -131,7 +141,8 @@ class _ImageStoryViewState extends State<ImageStoryView> {
         if (info.visibleFraction == 0) {
           widget.onVisibilityChanged?.call(false, _isImageLoaded);
         } else if (info.visibleFraction == 1) {
-          widget.onVisibilityChanged?.call(true, _isImageLoaded);
+          markImageAsVisible();
+          // widget.onVisibilityChanged?.call(true, _isImageLoaded);
         }
       },
       child: child,
