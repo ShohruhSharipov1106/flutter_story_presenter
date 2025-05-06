@@ -24,10 +24,15 @@ class VideoUtils {
       File? cachedVideo;
       // If caching is enabled, try to get the cached file.
       if (cacheFile ?? false) {
-        final videoFileFromCache = await _cacheManager.getFileFromCache(url);
-        if (videoFileFromCache != null) {
-          cachedVideo = videoFileFromCache.file;
-        } else {
+        try {
+          final videoFileFromCache = await _cacheManager.getFileFromCache(url);
+          if (videoFileFromCache != null) {
+            cachedVideo = videoFileFromCache.file;
+          }
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+        if (cachedVideo == null) {
           _cacheManager.getSingleFile(url).then((value) => cachedVideo = value);
         }
       }
