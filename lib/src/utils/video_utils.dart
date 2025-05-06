@@ -24,12 +24,17 @@ class VideoUtils {
       File? cachedVideo;
       // If caching is enabled, try to get the cached file.
       if (cacheFile ?? false) {
-        cachedVideo = await _cacheManager.getSingleFile(url);
+        final videoFileFromCache = await _cacheManager.getFileFromCache(url);
+        if (videoFileFromCache != null) {
+          cachedVideo = videoFileFromCache.file;
+        } else {
+          _cacheManager.getSingleFile(url).then((value) => cachedVideo = value);
+        }
       }
       // If a cached video file is found, create a VideoPlayerController from it.
       if (cachedVideo != null) {
         return VideoPlayerController.file(
-          cachedVideo,
+          cachedVideo!,
           videoPlayerOptions: videoPlayerOptions,
         );
       }
@@ -73,5 +78,6 @@ enum VideoStatus {
   live;
 
   bool get hasError => this == error;
+
   bool get isLive => this == live;
 }
